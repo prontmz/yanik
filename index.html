@@ -1,11 +1,338 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Moçambique — Cultura, História, Turismo e Mais</title>
+  <meta name="description" content="Site em HTML com informações, imagens e curiosidades sobre Moçambique. Design responsivo, muitos detalhes e uma área inferior com tela verde." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --text: #eaf0f5;
+      --muted: #9fb3c8;
+      --accent: #2fbf71; /* verde principal */
+      --accent-2: #1a8f54;
+      --card: #11161c;
+      --line: #223042;
+      --yellow: #ffd166;
+      --red: #ef476f;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body{
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #0b0f14 0%, #0b0f14 70%, #113b24 100%); /* escuro para um fundo que já sugere verde embaixo */
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+    header{
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(8px);
+      background: rgba(11,15,20,0.7);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{ max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: flex; gap: 16px; align-items: center; justify-content: space-between; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight: 800; letter-spacing: .5px; }
+    .brand img{ width: 28px; height: 18px; object-fit: cover; border:1px solid #000; box-shadow: 0 0 0 1px #fff inset; }
+    .menu{ display:flex; flex-wrap: wrap; gap:14px; }
+    .menu a{ padding: 8px 10px; border-radius: 10px; }
+    .menu a:hover{ background: #0f1721; }
+
+    .hero{
+      max-width: 1200px; margin: 24px auto 0; padding: 40px 20px 0; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: center;
+    }
+    .hero h1{ font-size: clamp(28px, 4vw, 48px); line-height: 1.15; margin: 6px 0 14px; }
+    .hero p{ color: var(--muted); font-size: 1.05rem; }
+    .badge{ display:inline-flex; align-items:center; gap:8px; font-size: .85rem; padding: 6px 10px; background: #0f1721; border:1px solid var(--line); border-radius: 999px; color: var(--muted); }
+    .cta{ display:flex; gap:12px; margin-top: 18px; }
+    .btn{
+      border: 1px solid var(--accent);
+      background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #08140d; font-weight: 800; padding: 12px 18px; border-radius: 14px; box-shadow: 0 6px 20px rgba(47,191,113,0.25);
+    }
+    .btn.alt{ background: transparent; color: var(--accent); border-color: var(--line); }
+
+    .hero-figure{ position: relative; }
+    .hero-figure img{ width: 100%; border-radius: 16px; border: 1px solid var(--line); display:block; }
+    .figcap{ position:absolute; right: 12px; bottom: 12px; background: rgba(0,0,0,.55); color:#e7ffe7; padding: 6px 10px; font-size: .8rem; border-radius: 10px; border:1px solid rgba(255,255,255,.15) }
+
+    section{ max-width: 1200px; margin: 0 auto; padding: 56px 20px; }
+    section h2{ font-size: clamp(22px, 3.2vw, 34px); margin: 0 0 18px; }
+    .grid{ display:grid; gap: 18px; }
+    .grid.cols-2{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid.cols-3{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid.cols-4{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid.cols-2{ grid-template-columns: 1fr; }
+      .grid.cols-3{ grid-template-columns: 1fr 1fr; }
+      .grid.cols-4{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .card{ background: var(--card); border:1px solid var(--line); border-radius: 16px; padding: 16px; }
+    .card h3{ margin: 0 0 8px; font-size: 1.15rem; }
+    .muted{ color: var(--muted); }
+
+    .gallery{ display:grid; grid-template-columns: repeat(12, 1fr); gap:10px; }
+    .gallery img{ width:100%; height: 100%; object-fit: cover; border-radius: 14px; border:1px solid var(--line); }
+    .span-6{ grid-column: span 6; }
+    .span-4{ grid-column: span 4; }
+    .span-8{ grid-column: span 8; }
+
+    table{ width:100%; border-collapse: collapse; border:1px solid var(--line); overflow: hidden; border-radius: 12px; }
+    th, td{ padding: 12px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+    th{ background: #0f1721; }
+    tbody tr:hover{ background: #0e141c; }
+
+    .provincias{ display:flex; flex-wrap: wrap; gap:8px; }
+    .tag{ padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#0f1721; color: var(--muted); }
+
+    .divider{ height:1px; background: var(--line); margin: 28px 0; }
+
+    /* Seção inferior com tela verde */
+    .green-bottom{
+      background: linear-gradient(180deg, #0f2a1b 0%, #145b33 35%, #1f8a4f 100%);
+      border-top: 1px solid #1d6b40;
+      color: #eaffea;
+    }
+    .green-bottom .card{ background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.18); }
+    footer{
+      background: #0f6b34; /* verde sólido no rodapé */
+      color: #eaffea;
+      border-top: 1px solid rgba(255,255,255,.25);
+    }
+    .footer-inner{ max-width: 1200px; margin: 0 auto; padding: 22px 20px; display: grid; gap: 14px; grid-template-columns: 1fr auto; align-items: center; }
+    .social{ display:flex; gap:12px; }
+    .social a{ color:#eaffea; opacity:.9 }
+    .top-link{ position: fixed; right: 18px; bottom: 18px; background: var(--accent); color: #06361d; font-weight: 800; padding: 10px 12px; border-radius: 12px; border:1px solid #0a4d2a; box-shadow: 0 8px 24px rgba(47,191,113,.35); }
+  </style>
 </head>
 <body>
-    
+  <header id="topo">
+    <nav class="nav">
+      <div class="brand">
+        <img alt="Bandeira de Moçambique" src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Mozambique.svg" />
+        <span>Moçambique</span>
+      </div>
+      <div class="menu">
+        <a href="#intro">Início</a>
+        <a href="#historia">História</a>
+        <a href="#cultura">Cultura</a>
+        <a href="#turismo">Turismo</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#fatos">Fatos</a>
+        <a href="#links">Referências</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO / INTRO -->
+    <section id="intro" class="hero">
+      <div>
+        <span class="badge">🇲🇿 País da África Austral • Litoral do Índico</span>
+        <h1>Moçambique: um mergulho em história, cultura, sabores e paisagens</h1>
+        <p>
+          Moçambique é conhecido pelo seu vasto litoral banhado pelo Oceano Índico, diversidade cultural vibrante, herança histórica marcante e parques naturais impressionantes. Nesta página, reunimos infos essenciais, imagens e curiosidades — tudo em um layout moderno com uma tela verde na parte inferior.
+        </p>
+        <div class="cta">
+          <a class="btn" href="#turismo">Explorar Turismo</a>
+          <a class="btn alt" href="#historia">Ler História</a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <img alt="Praias paradisíacas no Arquipélago de Bazaruto, Moçambique" src="https://upload.wikimedia.org/wikipedia/commons/8/83/Bazaruto_National_Park_2014.jpg" />
+        <figcaption class="figcap">Arquipélago de Bazaruto</figcaption>
+      </figure>
+    </section>
+
+    <!-- HISTÓRIA -->
+    <section id="historia">
+      <h2>História em Breve</h2>
+      <div class="grid cols-3">
+        <article class="card">
+          <h3>Antes do séc. XV</h3>
+          <p class="muted">Regiões habitadas por povos bantu, rotas de comércio no Índico e influência de reinos e sultanatos costeiros.</p>
+        </article>
+        <article class="card">
+          <h3>Período Colonial</h3>
+          <p class="muted">A presença portuguesa consolidou cidades costeiras e rotas comerciais. O século XX marcou transformações sociais e econômicas.</p>
+        </article>
+        <article class="card">
+          <h3>Independência e Atualidade</h3>
+          <p class="muted">Independência proclamada em 1975. O país superou conflitos e segue em desenvolvimento, valorizando a paz, cultura e recursos naturais.</p>
+        </article>
+      </div>
+      <div class="divider"></div>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Principais Cidades</h3>
+          <table>
+            <thead>
+              <tr><th>Cidade</th><th>Destaque</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Maputo</td><td>Capital, mistura de modernismo e art déco, gastronomia marcante.</td></tr>
+              <tr><td>Beira</td><td>Importante porto e porta de acesso ao interior.</td></tr>
+              <tr><td>Nampula</td><td>Ponto de ligação para o norte e Ilha de Moçambique.</td></tr>
+              <tr><td>Pemba</td><td>Praias do oceano turquesa e mergulho.</td></tr>
+              <tr><td>Tete</td><td>Corredor do Zambeze e ligações regionais.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Provincias</h3>
+          <div class="provincias">
+            <span class="tag">Cabo Delgado</span>
+            <span class="tag">Gaza</span>
+            <span class="tag">Inhambane</span>
+            <span class="tag">Manica</span>
+            <span class="tag">Maputo (Província)</span>
+            <span class="tag">Maputo (Cidade)</span>
+            <span class="tag">Nampula</span>
+            <span class="tag">Niassa</span>
+            <span class="tag">Sofala</span>
+            <span class="tag">Tete</span>
+            <span class="tag">Zambézia</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CULTURA -->
+    <section id="cultura">
+      <h2>Cultura & Sabores</h2>
+      <div class="grid cols-3">
+        <article class="card">
+          <h3>Idiomas</h3>
+          <p class="muted">O português é a língua oficial. Há inúmeras línguas bantu faladas no dia a dia, refletindo a riqueza étnica e cultural.</p>
+        </article>
+        <article class="card">
+          <h3>Gastronomia</h3>
+          <p class="muted">Frutos do mar, mandioca, amendoim, coco e o famoso piri‑piri. Pratos populares incluem <em>matapa</em>, camarão grelhado e caril.</p>
+        </article>
+        <article class="card">
+          <h3>Artes & Música</h3>
+          <p class="muted">Artesanato em madeira, capulanas coloridas, dança <em>mapiko</em>, marrabenta e influências contemporâneas urbanas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- TURISMO -->
+    <section id="turismo">
+      <h2>Turismo e Natureza</h2>
+      <div class="grid cols-2">
+        <figure class="card">
+          <img alt="Parque Nacional da Gorongosa" src="https://upload.wikimedia.org/wikipedia/commons/6/69/Gorongosa_National_Park_Lions.jpg" />
+          <figcaption class="muted">Parque Nacional da Gorongosa — fauna restaurada e safáris memoráveis.</figcaption>
+        </figure>
+        <figure class="card">
+          <img alt="Ilha de Moçambique, patrimônio histórico" src="https://upload.wikimedia.org/wikipedia/commons/5/52/Ilha_de_Mo%C3%A7ambique_-_Fortaleza_de_S%C3%A3o_Sebasti%C3%A3o_%28by_Serge_Octopus%29.jpg" />
+          <figcaption class="muted">Ilha de Moçambique — Patrimônio Mundial pela UNESCO.</figcaption>
+        </figure>
+      </div>
+      <div class="grid cols-3" style="margin-top:14px;">
+        <figure class="card">
+          <img alt="Mergulho em Ponta do Ouro" src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Dolphin_in_Deep_Ocean.jpg" />
+          <figcaption class="muted">Ponta do Ouro — mergulhos, golfinhos e praias extensas.</figcaption>
+        </figure>
+        <figure class="card">
+          <img alt="Praia e dunas em Inhambane" src="https://upload.wikimedia.org/wikipedia/commons/0/05/Praia_do_Tofo.jpg" />
+          <figcaption class="muted">Inhambane e Tofo — dunas, surf e vida marinha.</figcaption>
+        </figure>
+        <figure class="card">
+          <img alt="Delta do Zambeze visto de cima" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Zambezi_Delta.jpg" />
+          <figcaption class="muted">Delta do Zambeze — paisagens alagadas e observação de aves.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section id="galeria">
+      <h2>Galeria</h2>
+      <div class="gallery">
+        <img class="span-8" alt="Maputo à noite" src="https://upload.wikimedia.org/wikipedia/commons/7/79/Maputo_city_center.jpg" />
+        <img class="span-4" alt="Capulana colorida" src="https://upload.wikimedia.org/wikipedia/commons/9/97/Capulana.jpg" />
+        <img class="span-6" alt="Praia em Pemba" src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Pemba_Bay_Mozambique.jpg" />
+        <img class="span-6" alt="Artesanato em madeira" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Wood_carving_Mozambique.jpg" />
+      </div>
+    </section>
+
+    <!-- FATOS & DICAS -->
+    <section id="fatos" class="green-bottom">
+      <h2>Fatos Rápidos & Dicas Úteis</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Moeda</h3>
+          <p class="muted">Metical (MZN). Cartões são aceitos em centros urbanos; leve dinheiro em espécie para áreas remotas.</p>
+        </div>
+        <div class="card">
+          <h3>Clima</h3>
+          <p class="muted">Tropical, com estação chuvosa e ciclones ocasionais na costa. O inverno é ameno e seco.</p>
+        </div>
+        <div class="card">
+          <h3>Transporte</h3>
+          <p class="muted">Voos domésticos conectam as principais cidades; estradas costeiras oferecem vistas incríveis (atenção à segurança e ao estado das vias).</p>
+        </div>
+      </div>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Curiosidades</h3>
+          <ul class="muted">
+            <li>O idioma português convive com várias línguas bantu, como changana, macua e sena.</li>
+            <li>A culinária tem fortes influências do Índico, com destaque para frutos do mar e especiarias.</li>
+            <li>A Ilha de Moçambique foi um centro histórico do comércio no Oceano Índico.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Boas Práticas</h3>
+          <ul class="muted">
+            <li>Respeite tradições locais e peça permissão antes de fotografar pessoas.</li>
+            <li>Prefira guias locais credenciados para experiências mais autênticas e seguras.</li>
+            <li>Proteja o ambiente: não deixe lixo nas praias e parques.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS ÚTEIS / REFERÊNCIAS VISUAIS -->
+    <section id="links">
+      <h2>Referências e Links Úteis</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Fontes Visuais (imagens públicas)</h3>
+          <ul class="muted">
+            <li>Wikimedia Commons — Bazaruto, Gorongosa, Maputo, Capulana, Pemba, Zambeze, Ilha de Moçambique.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Turismo</h3>
+          <p class="muted">Procure informações atualizadas em portais oficiais e operadores locais para planejar deslocamentos, parques e mergulhos.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <small>© <span id="year"></span> Guia Visual de Moçambique. Conteúdo educativo e ilustrativo.</small>
+      <div class="social">
+        <a href="#topo" aria-label="Voltar ao topo">⬆️ Topo</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#topo" class="top-link" title="Voltar ao topo">Topo</a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
